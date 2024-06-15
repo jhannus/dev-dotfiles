@@ -1,0 +1,33 @@
+
+alias fzgsha="fzgs | awk '{print \$1}'"
+alias sfzgs="git show \$(fzgsha)"
+alias fzbat="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
+alias nfz="nvim \$(fzbat)"
+alias batdiff="git diff --name-only --relative --diff-filter=d | xargs bat --diff --theme=TwoDark"
+
+alias ls="eza"
+alias ll="eza -l"
+alias lla="eza -la"
+alias tree="eza --tree --git-ignore"
+
+alias fzgs="git log --oneline --decorate \
+  --pretty=format:\"%Cred%h%Creset %Cgreen%ad%Creset | %s%d %Cblue[%an]%Creset\" --date=short --color=always  \
+    | fzf --ansi --preview  'git show --color=always \$(echo {} | cut -d\" \" -f1) | bat --style=numbers --color=always'"
+
+function rgfzf() {
+  rg --hidden -g '!.git/' --line-number \
+    --no-heading --color=always --smart-case "$@" \
+    | fzf -d ':' -n 2.. --ansi --no-sort --preview-window 'down:50%:+{2}' \
+      --preview \
+        'bat --theme=base16 --style=numbers --color=always --highlight-line {2} {1}'
+}
+
+export TPROJ_HOME="${HOME}/projects"
+
+function tmux-project() {
+  PROJECT="${TPROJ_HOME}/${1}"
+  tmux new-window -c $PROJECT
+  tmux split-window -vf -c $PROJECT 
+  tmux split-window -hfb -c $PROJECT "bash --login -c nvim ${PROJECT}"
+}
+

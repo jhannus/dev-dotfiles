@@ -1,3 +1,9 @@
 [submodule ".config/nvim"]
 	path = .config/nvim
 	url = https://github.com/nvim-lua/kickstart.nvim.git
+[submodule ".config/bat/syntaxes"]
+	path = .config/bat/syntaxes
+	url = https://github.com/tellnobody1/sublime-purescript-syntax
+[submodule ".config/bat/themes"]
+	path = .config/bat/themes
+	url = https://github.com/greggb/sublime-snazzy
